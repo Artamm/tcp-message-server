@@ -9,8 +9,9 @@ public class MessageServer implements AutoCloseable {
     private ConcurrentMap<String, Object> data = new ConcurrentHashMap<>();
     private ExecutorService executor = Executors.newFixedThreadPool(10);
 
-    public void start(int port) throws IOException {
+    public void start(int port, int timeOut) throws IOException {
         serverSocket = new ServerSocket(port);
+        serverSocket.setSoTimeout(timeOut);
         prepareData();
         while (!serverSocket.isClosed()) {
             executor.execute(new MessageServiceHandler(serverSocket.accept(), data));

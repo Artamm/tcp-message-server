@@ -14,10 +14,11 @@ public class ServerStart {
         int port = 9090;
         try (MessageServer serverSocket = new MessageServer()) {
             logger.info("TCP server established");
-            serverSocket.start(port);
+            serverSocket.start(port, 30000);
         } catch (IOException e) {
             logger.error("I/O Exception in MessageServer: {}", e.getMessage());
         } catch (Exception e) {
+            logger.error("Error in MessageServer: {}", e.getMessage());
             throw new RuntimeException(e);
         }
     }

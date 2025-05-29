@@ -19,8 +19,9 @@ public class TcpClient {
         try (Socket socket = new Socket(hostname, port);
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-             BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
+             BufferedReader console = new BufferedReader(new InputStreamReader(System.in))
         ) {
+            socket.setSoTimeout(30000);
             logger.info("TCP client established");
             String userInput;
             while ((userInput = console.readLine()) != null) {
@@ -41,6 +42,5 @@ public class TcpClient {
             throw new RuntimeException("Connection refused: connect.");
         }
         logger.info("Disconnecting client");
-
     }
 }

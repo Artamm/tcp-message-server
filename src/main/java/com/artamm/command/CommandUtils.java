@@ -21,14 +21,21 @@ public class CommandUtils {
         }
 
         Command.Task task = Command.Task.find(parts[0]);
-        if (task == null) {
+        String key = parts.length > 1 ? parts[1] : null;
+        String value = parts.length > 2 ? parts[2] : null;
+        if (task == null || !isValidCommand(task, key, value)) {
             return null;
         }
 
-        String key = parts.length > 1 ? parts[1] : null;
-        String value = parts.length > 2 ? parts[2] : null;
-
         return new Command(task, key, value);
+    }
+
+    private static boolean isValidCommand(Command.Task task, String key, String value) {
+        return switch (task) {
+            case ADD, SET -> key != null && value != null;
+            case DELETE -> key != null;
+            case LIST, END -> key == null && value == null;
+        };
     }
 
     public static String generateDataJson(Map<String, Object> data) {

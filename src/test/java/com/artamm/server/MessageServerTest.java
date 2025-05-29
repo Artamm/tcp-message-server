@@ -2,13 +2,13 @@ package com.artamm.server;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
+import java.net.SocketTimeoutException;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MessageServerTest {
     @Test
-    void testServerStartup() throws IOException {
-        assertDoesNotThrow(() -> new MessageServer().start(9090));
+    void verify_messageServerTimesOut_throwsException() {
+        assertThrows(SocketTimeoutException.class,() -> new MessageServer().start(9090, 3000));
     }
 }
