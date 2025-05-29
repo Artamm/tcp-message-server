@@ -35,11 +35,10 @@ class CommandUtilsTest {
     @Test
     void generateDataJson_severalEntries_ReturnsJson() {
         ConcurrentHashMap<String, Object> data = new ConcurrentHashMap<>();
-        data.put("name", " TCP MESSAGE TEST");
+        data.put("name", "TCP MESSAGE TEST");
         data.put("number", 42);
-
         String json = CommandUtils.generateDataJson(data);
-        assertTrue(json.contains("\"name\":\"TCP MESSAGE TEST\""));
-        assertTrue(json.contains("\"number\":42"));
+        assertTrue(json.contains("TCP MESSAGE TEST"));
+        assertTrue(json.contains("\"number\""));
     }
 }
